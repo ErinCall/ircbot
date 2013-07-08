@@ -2,6 +2,7 @@
 #
 # test   - tests that authorization is working
 # !eval  - evals the given param
+# !addrad - adds a rad to the given lib
 
 strftime = require('strftime')
 querystring = require('querystring')
