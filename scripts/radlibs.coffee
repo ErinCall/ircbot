@@ -8,7 +8,7 @@ sha1 = require('sha1')
 
 module.exports = (robot) ->
   robot.respond /test/, (msg) ->
-    test_auth msg, (response) ->
+    test_auth robot, (response) ->
       msg.send response
   # robot.respond /!eval (.*)/, (msg) ->
   #   radlib msg, (response) ->
@@ -23,13 +23,13 @@ module.exports = (robot) ->
 
 
 
-test_auth = (msg, cb) ->
+test_auth = (robot, cb) ->
   endpoint = "/test_authorization"
   params = {}
   time = strftime '%Y%m%dT%H:%M:%S'
   signature = sign time, endpoint, params
   query = querystring.stringify(params)
-  msg.http("http:www.radlibs.info" + endpoint).post(query) (err, res, body) ->
+  robot.http("http:www.radlibs.info" + endpoint).post(query) (err, res, body) ->
     cb body
 
 
