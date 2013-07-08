@@ -39,7 +39,7 @@ test_auth = (robot, cb) ->
 
 auth =
   api_key: process.env.HUBOT_RADLIBS_API_KEY
-  user_id: process.env.HUBOT_RADLIBS_API_KEY
+  user_id: process.env.HUBOT_RADLIBS_USER_ID
 
 sign = (time, endpoint, params) ->
   plaintext = time
