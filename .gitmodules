@@ -1,0 +1,3 @@
+[submodule "hubot-scripts"]
+	path = hubot-scripts
+	url = git@github.com:github/hubot-scripts.git
