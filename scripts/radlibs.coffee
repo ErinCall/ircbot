@@ -20,6 +20,21 @@ module.exports = (robot) ->
         msg.send response.radlib
       else
         msg.send response.error
+  robot.hear /^!addrad\s+(\w+)\s+(.*)/, (msg) ->
+    add_rad robot, msg.match[1], msg.match[2] (response) ->
+      if response.status == 'ok'
+        msg.send 'Added!'
+      else
+        msg.send response.error
+
+
+add_rad = (robot, lib_name, rad, cb) ->
+  endpoint = "/lib/rad/new"
+  params =
+    association_id: auth.association_id
+    rad: rad
+    lib: lib_name
+  api_call robot, endpoint, params, cb
 
 
 test_radlib = (robot, radlib, cb) ->
