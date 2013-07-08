@@ -40,7 +40,7 @@ auth =
   user_id: process.env.HUBOT_RADLIBS_API_KEY
 
 sign = (time, endpoint, params) ->
-  plaintext += time
+  plaintext = time
   plaintext += "\n"
   Object.keys(params).sort.forEach (key) ->
     plaintext += key + params[key] + "\n"
