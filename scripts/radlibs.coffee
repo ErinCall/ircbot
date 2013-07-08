@@ -1,8 +1,9 @@
 # Interacts with www.radlibs.info
 #
 # test   - tests that authorization is working
-# !eval  - evals the given param
-# !addrad - adds a rad to the given lib
+# !eval <Rad> - evals the given param
+# !addrad <Lib> <Rad> - adds a rad to the given lib
+# !addlib <Lib> - Creates a new lib with the given name
 
 strftime = require('strftime')
 querystring = require('querystring')
@@ -27,6 +28,12 @@ module.exports = (robot) ->
         msg.send 'Added!'
       else
         msg.send response.error
+  robot.hear /^addlib\s+(\w+)/, (msg) ->
+    add_lib robot, msg.match[1], (response) ->
+      if response.status == 'ok'
+        msg.send 'Added!'
+      else
+        msg.send response.error
 
 
 add_rad = (robot, lib_name, rad, cb) ->
@@ -37,6 +44,12 @@ add_rad = (robot, lib_name, rad, cb) ->
     lib: lib_name
   api_call robot, endpoint, params, cb
 
+
+add_lib = (robot, lib_name, cb) ->
+  endpoint = "/association" + auth.association_id + "/lib/new"
+  params =
+    name: lib_name
+  api_call robot, endpoint, params, cb
 
 test_radlib = (robot, radlib, cb) ->
   endpoint = "/association/" + auth.association_id + "/test_radlib"
