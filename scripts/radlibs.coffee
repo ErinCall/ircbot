@@ -31,7 +31,7 @@ test_auth = (robot, cb) ->
   params.time = time
   params.signature = signature
   params.user_id = auth.user_id
-  query = querystring.stringify(params)
+  query = JSON.stringify(params)
   console.log(params)
   robot.http("http://www.radlibs.info" + endpoint).post(query) (err, res, body) ->
     cb body
