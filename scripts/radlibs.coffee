@@ -42,7 +42,7 @@ auth =
 sign = (time, endpoint, params) ->
   plaintext = time
   plaintext += "\n"
-  Object.keys(params).sort.forEach (key) ->
+  Object.keys(params).sort().forEach (key) ->
     plaintext += key + params[key] + "\n"
   plaintext += endpoint + "\n"
   plaintext += auth.api_key
