@@ -14,7 +14,10 @@ module.exports = (robot) ->
   robot.hear /!eval (.*)/, (msg) ->
     test_radlib robot, msg.match[1], (response) ->
       body = JSON.parse response
-      msg.send body.radlib
+      if body.status == 'ok'
+        msg.send body.radlib
+      else
+        msg.send body.error
 
 
 test_radlib = (robot, radlib, cb) ->
