@@ -1,5 +1,10 @@
+# Interacts with www.radlibs.info
+#
+# !test   - tests that authorization is working
+
 strftime = require('strftime')
 querystring = require('querystring')
+sha1 = require('sha1')
 
 module.exports = (robot) ->
   robot.respond /!test/, (msg) ->
@@ -33,10 +38,10 @@ auth =
   user_id: process.env.HUBOT_RADLIBS_API_KEY
 
 sign = (time, endpoint, params) ->
-  signature += time
-  signature += "\n"
+  plaintext += time
+  plaintext += "\n"
   Object.keys(params).sort.forEach (key) ->
-    signature += key + params[key] + "\n"
-  signature += endpoint + "\n"
-  signature += auth.api_key
-  signature
+    plaintext += key + params[key] + "\n"
+  plaintext += endpoint + "\n"
+  plaintext += auth.api_key
+  sha1 plaintext
