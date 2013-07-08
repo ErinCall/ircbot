@@ -25,6 +25,7 @@ test_radlib = (robot, radlib, cb) ->
   signature = sign time, endpoint, params
   params.time = time
   params.signature = signature
+  console.log signature
   params.user_id = auth.user_id
   query = querystring.stringify(params)
   robot.http("http://www.radlibs.info")
@@ -63,4 +64,5 @@ sign = (time, endpoint, params) ->
     plaintext += key + params[key] + "\n"
   plaintext += endpoint + "\n"
   plaintext += auth.api_key
+  console.log plaintext
   sha1 plaintext
