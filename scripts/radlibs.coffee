@@ -21,7 +21,7 @@ module.exports = (robot) ->
       else
         msg.send response.error
   robot.hear /^!addrad\s+(\w+)\s+(.*)/, (msg) ->
-    add_rad robot, msg.match[1], msg.match[2] (response) ->
+    add_rad robot, msg.match[1], msg.match[2], (response) ->
       if response.status == 'ok'
         msg.send 'Added!'
       else
