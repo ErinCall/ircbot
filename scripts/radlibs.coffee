@@ -1,6 +1,7 @@
 # Interacts with www.radlibs.info
 #
-# !test   - tests that authorization is working
+# test   - tests that authorization is working
+# !eval  - evals the given param
 
 strftime = require('strftime')
 querystring = require('querystring')
@@ -10,17 +11,26 @@ module.exports = (robot) ->
   robot.respond /test/, (msg) ->
     test_auth robot, (response) ->
       msg.send response
-  # robot.respond /!eval (.*)/, (msg) ->
-  #   radlib msg, (response) ->
-  #     msg.send response
+  robot.hear /!eval (.*)/, (msg) ->
+    test_radlib robot, msg.match[1], (response) ->
+      body = JSON.parse response
+      msg.send body.radlib
 
-        # url = 'http://httpbin.org/post'
-        # data = QS.stringify({'hubot-post': msg.match[1]})
 
-        # msg.http(url)
-        #     .post(data) (err, res, body) ->
-        #         msg.send body
-
+test_radlib = (robot, radlib, cb) ->
+  endpoint = "/association/1/test_radib"
+  params = {rad: radlib}
+  time = strftime '%Y%m%dT%H:%M:%S'
+  signature = sign time, endpoint, params
+  params.time = time
+  params.signature = signature
+  params.user_id = auth.user_id
+  query = querystring.stringify(params)
+  robot.http("http://www.radlibs.info")
+    .header('Content-type', 'application/x-www-form-urlencoded')
+    .scope endpoint, (cli) ->
+      cli.post(query) (error, res,body) ->
+        cb body
 
 
 test_auth = (robot, cb) ->
