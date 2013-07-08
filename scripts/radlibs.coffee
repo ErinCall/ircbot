@@ -60,7 +60,7 @@ api_call = (robot, endpoint, params, cb) ->
   robot.http('http://www.radlibs.info')
     .header('Content-type', 'application/x-www-form-urlencoded')
     .scope endpoint, (cli) ->
-      cli.post(query) (error, res, body) ->
+      cli.post(query.toString('utf8')) (error, res, body) ->
         cb JSON.parse(body)
 
 auth =
