@@ -29,7 +29,7 @@ test_auth = (robot, cb) ->
   time = strftime '%Y%m%dT%H:%M:%S'
   signature = sign time, endpoint, params
   query = querystring.stringify(params)
-  robot.http("http:www.radlibs.info" + endpoint).post(query) (err, res, body) ->
+  robot.http("http://www.radlibs.info" + endpoint).post(query) (err, res, body) ->
     cb body
 
 
