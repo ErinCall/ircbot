@@ -19,12 +19,12 @@ module.exports = (robot) ->
 
 
 test_radlib = (robot, radlib, cb) ->
-  endpoint = "/association/1/test_radib"
+  endpoint = "/association/1/test_radlib"
   params = {rad: radlib}
   time = strftime '%Y%m%dT%H:%M:%S'
   signature = sign time, endpoint, params
   params.time = time
-  # params.signature = signature
+  params.signature = signature
   params.user_id = auth.user_id
   query = querystring.stringify(params)
   robot.http("http://www.radlibs.info")
