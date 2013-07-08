@@ -13,6 +13,7 @@ module.exports = (robot) ->
       msg.send response
   robot.hear /!eval (.*)/, (msg) ->
     test_radlib robot, msg.match[1], (response) ->
+      msg.send response
       body = JSON.parse response
       msg.send body.radlib
 
