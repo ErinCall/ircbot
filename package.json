@@ -24,6 +24,7 @@
     "hubot-irc": "0.x.x",
     "optparse": "1.x.x",
     "underscore": "1.x.x",
-    "redis": "0.6.x"
+    "redis": "0.6.x",
+    "strftime": "0.6.x"
   }
 }
