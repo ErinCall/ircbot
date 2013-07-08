@@ -8,6 +8,7 @@ sha1 = require('sha1')
 
 module.exports = (robot) ->
   robot.respond /!test/, (msg) ->
+    console.log 'here!!!!'
     test_auth (response) ->
       msg.send response
   # robot.respond /!eval (.*)/, (msg) ->
@@ -24,6 +25,7 @@ module.exports = (robot) ->
 
 
 test_auth = (msg, cb) ->
+  console.log 'testing auth!'
   endpoint = "/test_authorization"
   params = {}
   time = strftime('%Y%m%dT%H:%M:%S')
