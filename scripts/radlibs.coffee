@@ -10,49 +10,42 @@ sha1 = require('sha1')
 module.exports = (robot) ->
   robot.respond /test/, (msg) ->
     test_auth robot, (response) ->
-      msg.send response
+      if response.status == 'ok'
+        msg.send 'auth is working fine'
+      else
+        msg.send response.error
   robot.hear /!eval (.*)/, (msg) ->
     test_radlib robot, msg.match[1], (response) ->
-      body = JSON.parse response
-      if body.status == 'ok'
-        msg.send body.radlib
+      if response.status == 'ok'
+        msg.send response.radlib
       else
-        msg.send body.error
+        msg.send response.error
 
 
 test_radlib = (robot, radlib, cb) ->
   endpoint = "/association/1/test_radlib"
   params = {rad: radlib}
-  time = strftime '%Y%m%dT%H:%M:%S'
-  signature = sign time, endpoint, params
-  params.time = time
-  params.signature = signature
-  params.user_id = auth.user_id
-  query = querystring.stringify(params)
-  robot.http("http://www.radlibs.info")
-    .header('Content-type', 'application/x-www-form-urlencoded')
-    .scope endpoint, (cli) ->
-      cli.post(query) (error, res,body) ->
-        cb body
+  api_call robot, endpoint, params, cb
 
 
 test_auth = (robot, cb) ->
   endpoint = "/test_authorization"
   params = {}
+  api_call robot, endpoint, params, cb
+
+
+api_call = (robot, endpoint, params, cb) ->
   time = strftime '%Y%m%dT%H:%M:%S'
   signature = sign time, endpoint, params
   params.time = time
   params.signature = signature
   params.user_id = auth.user_id
-  query = querystring.stringify(params)
-  console.log(params)
-  robot.http("http://www.radlibs.info")
+  query = querystring.stringify params
+  robot.http('http://www.radlibs.info')
     .header('Content-type', 'application/x-www-form-urlencoded')
     .scope endpoint, (cli) ->
-      cli.post(query) (error, res,body) ->
-        cb body
-
-
+      cli.post(query) (error, res, body) ->
+        cb JSON.parse(body)
 
 auth =
   api_key: process.env.HUBOT_RADLIBS_API_KEY
