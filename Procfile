@@ -1,1 +1,1 @@
-app: bin/hubot -a irc -n herobot -d
+app: bin/hubot -a irc -n radloader -d
