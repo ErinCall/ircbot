@@ -31,7 +31,7 @@ test_auth = (msg, cb) ->
   console.log("about to sign")
   signature = sign time, endpoint, params
   console.log("about to generate query string")
-  query = querystring(params)
+  query = querystring.stringify(params)
   console.log("about to POST")
   msg.http("http:www.radlibs.info" + endpoint).post(query) (err, res, body) ->
     cb body
