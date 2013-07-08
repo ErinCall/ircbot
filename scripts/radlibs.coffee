@@ -34,6 +34,7 @@ test_auth = (robot, cb) ->
   query = querystring.stringify(params)
   console.log(params)
   robot.http("http://www.radlibs.info")
+    .header('Content-type', 'application/x-www-form-urlencoded')
     .scope endpoint, (cli) ->
       cli.post(query) (error, res,body) ->
         cb body
