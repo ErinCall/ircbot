@@ -14,7 +14,7 @@ module.exports = (robot) ->
         msg.send 'auth is working fine'
       else
         msg.send response.error
-  robot.hear /!eval (.*)/, (msg) ->
+  robot.hear /^!eval (.*)/, (msg) ->
     test_radlib robot, msg.match[1], (response) ->
       if response.status == 'ok'
         msg.send response.radlib
@@ -23,7 +23,7 @@ module.exports = (robot) ->
 
 
 test_radlib = (robot, radlib, cb) ->
-  endpoint = "/association/1/test_radlib"
+  endpoint = "/association/" + auth.association_id + "/test_radlib"
   params = {rad: radlib}
   api_call robot, endpoint, params, cb
 
@@ -50,6 +50,7 @@ api_call = (robot, endpoint, params, cb) ->
 auth =
   api_key: process.env.HUBOT_RADLIBS_API_KEY
   user_id: process.env.HUBOT_RADLIBS_USER_ID
+  association_id: process.env.HUBOT_RADLIBS_ASSOCIATION_ID
 
 sign = (time, endpoint, params) ->
   plaintext = time
