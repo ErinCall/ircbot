@@ -10,7 +10,7 @@ querystring = require('querystring')
 sha1 = require('sha1')
 
 module.exports = (robot) ->
-  robot.respond /test/, (msg) ->
+  robot.respond /test auth/, (msg) ->
     test_auth robot, (response) ->
       if response.status == 'ok'
         msg.send 'auth is working fine'
