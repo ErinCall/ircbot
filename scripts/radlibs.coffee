@@ -46,7 +46,7 @@ add_rad = (robot, lib_name, rad, cb) ->
 
 
 add_lib = (robot, lib_name, cb) ->
-  endpoint = "/association" + auth.association_id + "/lib/new"
+  endpoint = "/association/" + auth.association_id + "/lib/new"
   params =
     name: lib_name
   api_call robot, endpoint, params, cb
@@ -74,8 +74,6 @@ api_call = (robot, endpoint, params, cb) ->
     .header('Content-type', 'application/x-www-form-urlencoded')
     .scope endpoint, (cli) ->
       cli.post(query.toString('utf8')) (error, res, body) ->
-        console.log endpoint
-        console.log body
         cb JSON.parse(body)
 
 auth =
