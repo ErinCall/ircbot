@@ -28,7 +28,7 @@ module.exports = (robot) ->
         msg.send 'Added!'
       else
         msg.send response.error
-  robot.hear /^addlib\s+(\w+)/, (msg) ->
+  robot.hear /^!addlib\s+(\w+)/, (msg) ->
     add_lib robot, msg.match[1], (response) ->
       if response.status == 'ok'
         msg.send 'Added!'
